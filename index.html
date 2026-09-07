@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menù Meet Cafè</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+      background-color: #0b0b0b;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0b0b0b;
+      color: #e0e0e0;
+      padding-bottom: 80px;
+    }
+
+    /* BARRA CATEGORIE PERMANENTE IN SOVRAIMPRESSIONE */
+    .quick-nav-wrap {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      background: rgba(11, 11, 11, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #242424;
+      padding: 10px 0;
+    }
+    .quick-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 18px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+    .quick-nav::-webkit-scrollbar { display: none; }
+    .quick-nav a {
+      flex: 0 0 auto;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #d4af37;
+      text-decoration: none;
+      border: 1px solid #332a10;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(212, 175, 55, 0.08);
+      white-space: nowrap;
+    }
+    .quick-nav a:active,
+    .quick-nav a:hover {
+      background: #d4af37;
+      color: #0b0b0b;
+    }
+
+    /* HEADER CON SPAZIO PER NON FINIRE SOTTO LA BARRA FISSA */
+    .header {
+      text-align: center;
+      padding: 70px 20px 25px;
+      border-bottom: 1px solid #1a1a1a;
+      background: radial-gradient(circle at top, #161616 0%, #0b0b0b 70%);
+    }
+    .header h1 {
+      font-size: 26px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .header .subtitle {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #b0b0b0;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 11px;
+      color: #777;
+      line-height: 1.6;
+    }
+    .header a.phone-btn {
+      display: inline-block;
+      margin-top: 10px;
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #332a10;
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: rgba(212, 175, 55, 0.05);
+    }
+
+    /* CONTENITORE PRINCIPALE */
+    .menu-container {
+      max-width: 550px;
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    /* COMPENSAZIONE SCROLL SOTTO LA BARRA */
+    .menu-section {
+      scroll-margin-top: 60px;
+    }
+
+    /* FOTO BANNER */
+    .category-banner {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 35px;
+      margin-bottom: 16px;
+      display: block;
+      border: 1px solid #222;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    /* TITOLI CATEGORIA */
+    .category-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #d4af37;
+      border-bottom: 1px solid #242424;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      margin-top: 30px;
+    }
+
+    /* SINGOLO PIATTO */
+    .dish-item {
+      margin-bottom: 16px;
+    }
+    .dish-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .item-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    .item-price {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #d4af37;
+      white-space: nowrap;
+    }
+    .item-desc {
+      font-size: 11px;
+      color: #8c8c8c;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    /* TASTO FLOTTANTE TORNA SU */
+    .back-to-top {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #141414;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      z-index: 99;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 40px 20px 20px;
+      font-size: 11px;
+      color: #555;
+      border-top: 1px solid #1a1a1a;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- BARRA NAVIGAZIONE FISSA -->
+  <div class="quick-nav-wrap">
+    <nav class="quick-nav">
+      <a href="#antipasti">Antipasti</a>
+      <a href="#insalate">Insalate</a>
+      <a href="#primi">Primi</a>
+      <a href="#secondi">Secondi</a>
+      <a href="#burger">Bun</a>
+      <a href="#pinse">Pinse</a>
+      <a href="#dessert">Dessert</a>
+      <a href="#bevande">Bevande</a>
+      <a href="#cocktails">Cocktails</a>
+      <a href="#ice-tea">Ice Tea</a>
+      <a href="#sour">Sour</a>
+      <a href="#pestati">Pestati</a>
+      <a href="#analcolici">Analcolici</a>
+      <a href="#frozen">Frozen</a>
+      <a href="#gin-vodka">Gin &amp; Vodka</a>
+      <a href="#amari">Amari</a>
+      <a href="#bollicine">Bollicine</a>
+      <a href="#vini-bianchi">Vini Bianchi</a>
+      <a href="#vini-rossi">Vini Rossi</a>
+      <a href="#vini-rosati">Vini Rosati</a>
+    </nav>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Meet Cafè</h1>
+    <div class="subtitle">Lounge Bar &amp; Bistrot</div>
+    <p>Via Salvatore La Rosa 438, 92021 Aragona (AG)</p>
+    <p>Orari Cucina: Tutti i giorni 06:30 – 23:30</p>
+    <a href="tel:+390922082959" class="phone-btn">📞 Chiama: +39 0922 082959</a>
+  </div>
+
+  <div class="menu-container">
+
+    <!-- ANTIPASTI -->
+    <section id="antipasti" class="menu-section">
+      <img src="antipasti.jpg" class="category-banner" alt="Antipasti &amp; Fritti">
+      <div class="category-title">Antipasti &amp; Fritti</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tagliere Formaggi e Salumi Misto (x1)</span><span class="item-price">€ 12,00</span></div>
+        <div class="item-desc">con bruschette e specialità della casa</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Arancina al Nero di Seppia</span><span class="item-price">€ 13,00</span></div>
+        <div class="item-desc">su vellutata di pomodorini confit e burrata</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Frittura di Pesce</span><span class="item-price">€ 19,00</span></div>
+        <div class="item-desc">calamari e gambero rosso con maionese alla cipolla rossa di Tropea e chips di zucchine</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">La Real Caprese</span><span class="item-price">€ 14,00</span></div>
+        <div class="item-desc">fiordilatte, pomodoro e crudo San Daniele</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Il Fritto Special (min. 2 pax)</span><span class="item-price">€ 14,00</span></div>
+        <div class="item-desc">patatine con buccia, panelle, crocchette, nuggets, bastoncini di pollo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Focaccina Granmix ai 7 Cereali</span><span class="item-price">€ 10,00</span></div>
+        <div class="item-desc">con rucola, bresaola, ciliegino e scaglie di Grana Padano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Cestino Brisè</span><span class="item-price">€ 18,90</span></div>
+        <div class="item-desc">tonno scottato con cipolla rossa, maionese all'arancia e croccante all'olio evo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">L'Aperitutto (x1)</span><span class="item-price">€ 11,00</span></div>
+        <div class="item-desc">salumi, fritture, bruschette, formaggi misti</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Patatine Fritte Medie (tagliere quadrato)</span><span class="item-price">€ 4,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Patatine Fritte Grandi (tagliere grande rotondo)</span><span class="item-price">€ 8,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Patatine con Buccia</span><span class="item-price">€ 7,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">10 Nuggets di Pollo</span><span class="item-price">€ 7,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Arancinette Mignon (10 pz)</span><span class="item-price">€ 8,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Arancinette Mignon Special (10 pz)</span><span class="item-price">€ 10,00</span></div>
+      </div>
+    </section>
+
+    <!-- INSALATE -->
+    <section id="insalate" class="menu-section">
+      <div class="category-title">Insalate Meet</div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Insalata Classica</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">lattuga, pomodoro, mais, tonno e mozzarella fiordilatte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Insalata Siciliana</span><span class="item-price">€ 9,00</span></div>
+        <div class="item-desc">finocchio, arance, acciughe, pomodoro secco e formaggio siciliano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Insalata Bresaola</span><span class="item-price">€ 10,00</span></div>
+        <div class="item-desc">rucola, bresaola, pomodoro, scaglie di Parmigiano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Insalata Salmone</span><span class="item-price">€ 11,00</span></div>
+        <div class="item-desc">salmone, valeriana, ciliegino dry, carota e pistacchi</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Insalata Tacchino</span><span class="item-price">€ 10,00</span></div>
+        <div class="item-desc">valeriana, fesa di tacchino, noci, carote e provola siciliana</div>
+      </div>
+    </section>
+
+    <!-- PRIMI -->
+    <section id="primi" class="menu-section">
+      <img src="primi.jpg" class="category-banner" alt="Primi Piatti">
+      <div class="category-title">Primi Piatti</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Alla Carrettiera</span><span class="item-price">€ 11,00</span></div>
+        <div class="item-desc">pomodoro, basilico, aglio</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Alla Norma con Ricotta Salata</span><span class="item-price">€ 11,00</span></div>
+        <div class="item-desc">melanzane, pesto di basilico, salsa di pomodoro</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Carbonara</span><span class="item-price">€ 14,00</span></div>
+        <div class="item-desc">guanciale, tuorlo d'uovo, pecorino romano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Al Tonno</span><span class="item-price">€ 13,00</span></div>
+        <div class="item-desc">tonno fresco, ciliegino, prezzemolo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Alici, Datterino e Mollica all'Olio EVO</span><span class="item-price">€ 13,00</span></div>
+        <div class="item-desc">con aglio, basilico e panure croccante</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tagliolino al Nero di Seppia</span><span class="item-price">€ 16,00</span></div>
+        <div class="item-desc">con aglio, basilico e panure croccante</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Busiate Pesce Spada, Datterino e Melanzane</span><span class="item-price">€ 16,00</span></div>
+        <div class="item-desc">con aglio e basilico</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Linguine con Vongole Veraci</span><span class="item-price">€ 18,00</span></div>
+        <div class="item-desc">con uova/bottarga, prezzemolo, datterino</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Gambero Rosso di Mazara e Pistacchi Locali</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">ciliegino, pesto di basilico, aglio, peperoncino</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Spaghettoni Ricci di Mare e Tartare di Gambero</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">con aglio</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">All'Aragosta (min. 2 pax)</span><span class="item-price">€ 28,00 / cad.</span></div>
+        <div class="item-desc">con aglio, ciliegino, pesto di basilico, salsa di pomodoro</div>
+      </div>
+    </section>
+
+    <!-- SECONDI -->
+    <section id="secondi" class="menu-section">
+      <img src="secondi.jpg" class="category-banner" alt="Secondi Piatti &amp; Carni">
+      <div class="category-title">Secondi &amp; Carni (Selezioni Bistrot)</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tagliata di Scottona</span><span class="item-price">€ 19,00</span></div>
+        <div class="item-desc">rucola, scaglie di Grana e ciliegino</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Filetto di Scottona</span><span class="item-price">€ 19,00</span></div>
+        <div class="item-desc">su tortino di patate, verdurine croccanti e la sua salsa</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Angus con Contorno</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">con patate al forno</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Filetto di Maialino</span><span class="item-price">€ 17,00</span></div>
+        <div class="item-desc">in crosta di pistacchi, patate novelle e glassa al Nero d'Avola</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tartare di Filetto</span><span class="item-price">€ 18,00</span></div>
+        <div class="item-desc">con formaggio di capra girgentana e marmellata di arance bio di Ribera</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Fiorentina (500g / 1kg)</span><span class="item-price">€ 60,00 / kg</span></div>
+        <div class="item-desc">con mix di verdure</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Lonzino Tonnato</span><span class="item-price">€ 16,00</span></div>
+        <div class="item-desc">con salsa alle olive siciliane e pomodorino confit</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Lacerto</span><span class="item-price">€ 17,00</span></div>
+        <div class="item-desc">su letto di misticanza con maionese rosé e chips di zucchine</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pesce Spada Grigliato</span><span class="item-price">€ 16,00</span></div>
+        <div class="item-desc">con contorno di verdure grigliate</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Triglie con Contorno</span><span class="item-price">€ 18,00</span></div>
+        <div class="item-desc">con contorno di verdure grigliate</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Calamaro Grigliato</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">con contorno di verdure grigliate</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">La Nostra Frittura di Pesce</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">calamari, gamberi, gambero rosso di Mazara, filetti di pesce locale</div>
+      </div>
+    </section>
+
+    <!-- BURGER -->
+    <section id="burger" class="menu-section">
+      <img src="burger.jpg" class="category-banner" alt="Burger Gourmet">
+      <div class="category-title">Bistrot Bun (Burger Gourmet)</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Hamburger Vegetariano</span><span class="item-price">€ 13,00</span></div>
+        <div class="item-desc">fiordilatte, pomodoro a fette, lattuga, zucchine e chips di patatine</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Hamburger di Scottona</span><span class="item-price">€ 13,00</span></div>
+        <div class="item-desc">cipolla rossa di Tropea, formaggio siciliano, pancetta coppata, salsa BBQ + contorno patatine fritte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Hamburger Angus (230 gr)</span><span class="item-price">€ 15,00</span></div>
+        <div class="item-desc">cheddar fuso, lattuga, pomodoro, bacon, cipolla croccante + contorno patatine fritte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Bun al Nero di Seppia</span><span class="item-price">€ 16,00</span></div>
+        <div class="item-desc">stracciatella, tartare di tonno, dadolata di pomodorino, pesto fresco + contorno patatine fritte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Bun al Basilico con Salmone</span><span class="item-price">€ 15,00</span></div>
+        <div class="item-desc">chips di limone candito, burrata, valeriana con maionese al lime</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Hamburger di Vitello Classic</span><span class="item-price">€ 9,00</span></div>
+        <div class="item-desc">lattuga, pomodoro, formaggio svizzero + contorno patatine fritte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Cotoletta di Pollo Burger</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">lattuga, pomodoro + contorno patatine fritte</div>
+      </div>
+    </section>
+
+    <!-- PINSE -->
+    <section id="pinse" class="menu-section">
+      <div class="category-title">Pinse &amp; Crunch</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa Margherita</span><span class="item-price">€ 5,00</span></div>
+        <div class="item-desc">salsa di pomodoro, mozzarella fiordilatte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa Margherita Classica</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">salsa di pomodoro, mozzarella fiordilatte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa di Semola Rimacinata Siciliana</span><span class="item-price">€ 9,00</span></div>
+        <div class="item-desc">salsa di pomodoro, acciughe, primosale siciliano, olive, capperi, origano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa alla Parmigiana</span><span class="item-price">€ 10,00</span></div>
+        <div class="item-desc">salsa pomodoro, fiordilatte, chips di melanzane croccanti al formaggio, basilico, pesto</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa ai 5 Cereali</span><span class="item-price">€ 13,00</span></div>
+        <div class="item-desc">margherita con crudo di Parma, fiordilatte, pomodorini confit e scaglie di Parmigiano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa Stracciatella e Gambero Rosso</span><span class="item-price">€ 15,00</span></div>
+        <div class="item-desc">gambero rosso di Mazara, capuliato di pomodorini secchi, microfoglie di basilico</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa Mortadella e Pistacchio</span><span class="item-price">€ 14,00</span></div>
+        <div class="item-desc">mortadella, burrata, fiordilatte, granella e pesto di pistacchio</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Crunch Kebab</span><span class="item-price">€ 11,00</span></div>
+        <div class="item-desc">con patatine fritte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Crunch Porchetta</span><span class="item-price">€ 12,00</span></div>
+        <div class="item-desc">mozzarella, cipolla rossa, patate con buccia, maionese allo zafferano</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Crunch Crudo di Parma</span><span class="item-price">€ 14,00</span></div>
+        <div class="item-desc">burrata, ciliegino e rucola</div>
+      </div>
+    </section>
+
+    <!-- DESSERT -->
+    <section id="dessert" class="menu-section">
+      <img src="dessert.jpg" class="category-banner" alt="Dessert">
+      <div class="category-title">Dessert</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pasticciotto Leccese</span><span class="item-price">€ 5,00</span></div>
+        <div class="item-desc">con ricotta e gocce di cioccolato / crema e cuore di amarena</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Cannolo Scomposto</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">con farina di mandorla tostata e arancia candita</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Cheesecake</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">ai frutti rossi / all'arancia / Kinder Bueno</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pasta Elena</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">con marmellata di arance e pistacchi</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pannacotta</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">al caramello mou con crumble al cacao amaro</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Sfera di Tiramisù</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">con spugna di cacao e crema pasticcera</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Crostatina</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">di crema pasticcera e frutta fresca</div>
+      </div>
+    </section>
+
+    <!-- BEVANDE -->
+    <section id="bevande" class="menu-section">
+      <div class="category-title">Bevande &amp; Soft Drink</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Acqua Naturale (0,5 L)</span><span class="item-price">€ 1,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Acqua Naturale / Frizzante (75 cl)</span><span class="item-price">€ 3,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Chinotto</span><span class="item-price">€ 2,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Coca-Cola (1 L)</span><span class="item-price">€ 5,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Coca-Cola (25 cl)</span><span class="item-price">€ 2,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Estathé Limone / Pesca</span><span class="item-price">€ 2,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Partannina</span><span class="item-price">€ 1,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Fanta / Sprite</span><span class="item-price">€ 2,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Kinley Bitter Lemon / Tonica</span><span class="item-price">€ 2,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Red Bull</span><span class="item-price">€ 3,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Succhi di Frutta</span><span class="item-price">€ 2,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Spuma</span><span class="item-price">€ 1,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tonica Fever-Tree</span><span class="item-price">€ 3,50</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tonica al Pompelmo</span><span class="item-price">€ 3,00</span></div>
+      </div>
+    </section>
+
+    <!-- COCKTAILS IBA -->
+    <section id="cocktails" class="menu-section">
+      <img src="drink.jpg" class="category-banner" alt="Cocktails IBA">
+      <div class="category-title">Cocktail's IBA</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Aperol Spritz</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Prosecco, Aperol, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Campari Spritz</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Prosecco, Bitter Campari, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Limoncello Spritz</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Limoncello, Prosecco, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Sarti Spritz</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Sarti Rosa, Prosecco, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Spritz Bianco</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Vino Bianco, Succo di Limone, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Hugo Spritz</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Prosecco, Liquore St Germain, Succo Lime, menta, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Negroni</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Rosso, Bitter, Gin</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Negroni Sbagliato</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Rosso, Bitter, Prosecco</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">White Negroni</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Bianco, Biancosarti, Gin</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Negroski</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Rosso, Bitter, Vodka</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Americano</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Rosso, Bitter, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Milano Torino</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Rosso, Bitter</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Boulevardier</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vermouth Rosso, Bitter, Bourbon</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Margarita</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Tequila, Triple sec, Succo di Lime</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Blu Coconut Margarita</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Tequila, Blue Curaçao, succo di limone, latte di cocco</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Frozen Blu</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Vodka, Blue Curaçao, succo d'ananas, latte di cocco</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">White Lady</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Gin, Triple sec, Succo di Limone</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pink Lady</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Gin, Succo di Limone, Granatina, Albume</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Daiquiri</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Rum Bianco, Succo di Lime, Zucchero Bianco fino</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Manhattan</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Rye Whiskey, Vermouth Rosso, Angostura</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Piña Colada</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Rum Bianco, Crema di Cocco, Ananas Fresca</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Sex On The Beach</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Peach Tree, Succo d'Arancia, Succo di Cranberry</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Paloma</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Tequila 100% Agave, Succo di Lime, Sale, Soda di Pompelmo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Espresso Martini</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Liquore al Caffè, Sciroppo di Zucchero, 1 Caffè Espresso</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Black Russian</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Liquore al Caffè</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Fernandito</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Fernet Branca, Coca-Cola</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Cuba Libre</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Rum Bianco, Coca-Cola, Succo di Lime</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Moscow Mule</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Ginger Beer, Succo di Lime</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">London Mule</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Gin, Ginger Beer, Succo di Lime</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Gin Fizz</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Succo di Lime, Sciroppo di Zucchero, Gin, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Garibaldi</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Campari, Succo di Arancia</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Screw Driver / Hair Navel</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Triple Sec, Succo d'Arancia</div>
+      </div>
+    </section>
+
+    <!-- ICE TEA -->
+    <section id="ice-tea" class="menu-section">
+      <div class="category-title">Ice Tea</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Long Island Ice Tea</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Gin, Rum Bianco, Vodka, Tequila, Cointreau, Succo di Limone, Sciroppo di Zucchero, Top di Coca-Cola</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Japanese Ice Tea</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Gin, Vodka, Tequila, Rum Bianco, Triple sec, Midori, succo di Limone, Sciroppo di Zucchero, Top di Lemon Soda</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Italian Ice Tea</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Gin, Rum Bianco, Amaretto Disaronno, Succo di Limone, Sciroppo di Zucchero, Top di Lemon</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Miami Ice Tea</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Rum Bianco, Gin, Blue Curacao, Succo di Limone, Sciroppo di Zucchero, Top di Lemon Soda</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Passion Ice Tea</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Rum Bianco, Passoa, Succo di Limone, Sciroppo di Zucchero, Top Vino Rosso</div>
+      </div>
+    </section>
+
+    <!-- SOUR -->
+    <section id="sour" class="menu-section">
+      <div class="category-title">Sour</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">New York Sour</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Rye Whiskey, Sciroppo di Zucchero, Succo di Limone, Albume, Top Vino Rosso</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Vodka Sour</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Vodka, Succo di Limone, Sciroppo di Zucchero, Albume</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Disaronno Sour</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Amaretto Disaronno, Succo di Limone, Sciroppo di Zucchero, Albume</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Whiskey Sour</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Bourbon Whiskey, Succo di Limone, Sciroppo di Zucchero, Albume</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Rum Sour</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Rum Invecchiato, Succo di Limone, Sciroppo di Zucchero, Albume</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Midori Sour</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Midori, succo di Limone, Sciroppo di Zucchero, Albume</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Mojito Cubano</span><span class="item-price">€ 7,00</span></div>
+        <div class="item-desc">Rum Bianco, Zucchero Bianco, Succo di Lime, Foglie di Menta, Soda Water</div>
+      </div>
+    </section>
+
+    <!-- PESTATI -->
+    <section id="pestati" class="menu-section">
+      <div class="category-title">Pestati</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Mojito</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Rum Bianco, Rum scuro, Fette di Lime, Zucchero di Canna, Foglie di Menta, Soda Water</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Caipiroska</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Vodka, Fette di Lime, Zucchero di Canna, Soda, Sciroppo a scelta (Fragola, Granatina, Mela Verde, Passion Fruit, Cranberry, Maracuja, Melograno)</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Caipirinha</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Cachaça, Fette di Lime, Zucchero di Canna</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Caipirissima</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Rum Bianco, Lime a Fette, Zucchero di Canna</div>
+      </div>
+    </section>
+
+    <!-- ANALCOLICI -->
+    <section id="analcolici" class="menu-section">
+      <div class="category-title">Analcolici</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Clover Club Virgin</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Gin 0.0% Alcohol, succo di fragola, succo di limone</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Caipiroska Analcolica</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Lime, zucchero, Sprite</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Virgin Mojito</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Lime, Foglie di Menta, Zucchero di Canna (Soda / Acqua frizzante / Lemon Soda)</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Sunrise</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Succo d'Arancia, Granatina</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Virgin Colada</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Ananas Fresca, Latte di Cocco</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">San Francisco</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Succo d'Arancia, Succo d'Ananas, Succo di Pompelmo, Succo di Limone, Sciroppo di Granatina</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Shirley Temple</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Ginger Ale, Granatina</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Spritz Analcolico</span><span class="item-price">€ 6,00</span></div>
+        <div class="item-desc">Crodino, Succo d'Arancia, Top di Soda</div>
+      </div>
+    </section>
+
+    <!-- FROZEN -->
+    <section id="frozen" class="menu-section">
+      <div class="category-title">Frozen</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Frozen Blu</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Vodka, Blue Curaçao, succo d'ananas, latte di cocco</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Frozen del giorno</span><span class="item-price">€ 8,00</span></div>
+        <div class="item-desc">Preparati con frutta fresca del giorno. Si prega di specificare allergie / intolleranze eventuali</div>
+      </div>
+    </section>
+
+    <!-- GIN & VODKA -->
+    <section id="gin-vodka" class="menu-section">
+      <div class="category-title">Gin &amp; Vodka Selection</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Gin Base / Ionio / Dolce Vita</span><span class="item-price">€ 6,00 – € 7,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Tanqueray / Bombay Sapphire</span><span class="item-price">€ 6,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Mazzetti</span><span class="item-price">€ 8,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Hendrick's / Gin Mare / Nordés / Roku / Engine / Malfy</span><span class="item-price">€ 9,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Monkey 47 / Mare Capri / Silenzio</span><span class="item-price">€ 10,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Portofino / Amuerte (Black / White)</span><span class="item-price">€ 12,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Vodka Base (Skyy / Moskovskaya)</span><span class="item-price">€ 7,00</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Grey Goose / Belvedere / Cîroc / Elit</span><span class="item-price">€ 9,00</span></div>
+      </div>
+    </section>
+
+    <!-- AMARI -->
+    <section id="amari" class="menu-section">
+      <div class="category-title">Amari &amp; Liquori</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Selezione Amari Tradizionali &amp; Siciliani</span><span class="item-price">€ 4,00</span></div>
+        <div class="item-desc">Montenegro, Amaro del Capo, Averna, Lucano, Jägermeister, Fernet Branca, Monte Polizzo</div>
+      </div>
+    </section>
+
+    <!-- BOLLICINE -->
+    <section id="bollicine" class="menu-section">
+      <img src="vini1.jpg" class="category-banner" alt="Carta dei Vini">
+      <div class="category-title">Le Bollicine</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Don Pèrignon</span><span class="item-price">€ 390,00</span></div>
+        <div class="item-desc">Champagne</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Federico II Milazzo</span><span class="item-price">€ 100,00</span></div>
+        <div class="item-desc">Metodo Classico Brut, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Moët et Chandon Extra Brut</span><span class="item-price">€ 90,00</span></div>
+        <div class="item-desc">Champagne</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Ca del Bosco Curvée</span><span class="item-price">€ 70,00</span></div>
+        <div class="item-desc">Franciacorta</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Bellavista Alma Curvée</span><span class="item-price">€ 55,00</span></div>
+        <div class="item-desc">Franciacorta</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Monte Rossa Brut</span><span class="item-price">€ 55,00</span></div>
+        <div class="item-desc">Franciacorta</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Cristo di Campobello</span><span class="item-price">€ 55,00</span></div>
+        <div class="item-desc">Spumante Metodo Classico, 50 mesi Grillo DOC, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Berlucchi 61' Saten</span><span class="item-price">€ 45,00</span></div>
+        <div class="item-desc">Franciacorta</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Gaudensius Blanc de Blancs</span><span class="item-price">€ 40,00</span></div>
+        <div class="item-desc">Firriato, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Milazzo Metodo Classico</span><span class="item-price">€ 28,00</span></div>
+        <div class="item-desc">Spumante brut, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Firriato Saint Germain</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Borgo Molino Prosecco DOC Extra Dry</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Treviso</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Astoria Prosecco Superiore</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Treviso</div>
+      </div>
+    </section>
+
+    <!-- VINI BIANCHI -->
+    <section id="vini-bianchi" class="menu-section">
+      <div class="category-title">I Vini Bianchi</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Maria Costanza" Riserva Milazzo</span><span class="item-price">€ 55,00</span></div>
+        <div class="item-desc">Chardonnay, Inzolia, Viognier e Sauvignon Blanc, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Mozia" Tasca d'Almerita</span><span class="item-price">€ 40,00</span></div>
+        <div class="item-desc">Grillo, Palermo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Maria Costanza" Milazzo</span><span class="item-price">€ 35,00</span></div>
+        <div class="item-desc">Chardonnay, Inzolia, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Pietrabianca" Tornatore</span><span class="item-price">€ 35,00</span></div>
+        <div class="item-desc">Carricante e Catarratto, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"CDC" Cristo di Campobello IGP</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Inzolia, Chardonnay e Catarratto, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Adenzia" Cristo di Campobello</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo e Inzolia, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Lalùci" Cristo di Campobello</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Santagostino" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Catarratto e Chardonnay, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Chiaramonte" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Inzolia, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Charme" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Inzolia e Zibibbo, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Baiamore" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Inzolia, Chardonnay e Viognier, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Le Sabbie dell'Etna" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Carricante e Catarratto, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"KiKè" Fina</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Traminer e Sauvignon Blanc, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Kebrilla" Fina</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Scialusu" Bagliesi</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Catarratto, mix di uve bianche, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Leone" Tasca d'Almerita</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Catarratto, Pinot Bianco, Sauvignon e Moscato, Palermo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Passione &amp; Sentimento" Pasqua</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Glera, Chardonnay, Pinot Bianco, Veneto</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Passivento" Barone Montalto</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grecanico, Catarratto e Chardonnay, Valle del Belice</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Angimbè" Cusumano</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Inzolia e Chardonnay, Palermo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Passo di Luna" IGP Funaro</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Zibibbo e Inzolia, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"La Segreta" Planeta</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grecanico, Grillo e Chardonnay, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Traimari" Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo e Zibibbo, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Il Salinaro" Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Kelbi" Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Catarratto, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Dianthà" Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Grillo, Malvasia Bianca, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Bianco di Nera" Milazzo</span><span class="item-price">€ 22,00</span></div>
+        <div class="item-desc">Chardonnay e Inzolia, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Tinchitè" Feudo Arancio</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">Grillo, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Sallier de la Tour" Tasca d'Almerita</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">Grillo DOC, Palermo</div>
+      </div>
+    </section>
+
+    <!-- VINI ROSSI -->
+    <section id="vini-rossi" class="menu-section">
+      <div class="category-title">I Vini Rossi</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Amarone della Valpolicella" Zenato</span><span class="item-price">€ 80,00</span></div>
+        <div class="item-desc">Verona</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Lusirà" Cristo di Campobello</span><span class="item-price">€ 45,00</span></div>
+        <div class="item-desc">Syrah, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Lu Patri" Cristo di Campobello</span><span class="item-price">€ 45,00</span></div>
+        <div class="item-desc">Nero d'Avola, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Maria Costanza" Milazzo</span><span class="item-price">€ 45,00</span></div>
+        <div class="item-desc">Nero d'Avola, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Don Antonio" Morgante</span><span class="item-price">€ 45,00</span></div>
+        <div class="item-desc">Nero d'Avola, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Etna Rosso" Tornatore</span><span class="item-price">€ 35,00</span></div>
+        <div class="item-desc">Nerello Mascalese, Nerello Cappuccio, Catania</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Harmonium" Firriato</span><span class="item-price">€ 35,00</span></div>
+        <div class="item-desc">Nero d'Avola, Palermo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Soria" Firriato</span><span class="item-price">€ 30,00</span></div>
+        <div class="item-desc">Perricone, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Le Sabbie dell'Etna" Firriato</span><span class="item-price">€ 30,00</span></div>
+        <div class="item-desc">Nerello Mascalese e Nerello Cappuccio, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"CDC" Cristo di Campobello IGP</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola, Grillo, Inzolia, Syrah, Chardonnay, Cabernet Sauvignon, Merlot, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Adenzia" Cristo di Campobello</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola e Syrah, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Scialusu" Bagliesi</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Santagostino" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola e Syrah, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Chiaramonte" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Passivento" Barone Montalto</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Baiamore" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Syrah, Merlot e Frappato, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Lamuri" Tasca d'Almerita</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Syrah, Palermo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Guarnaccio" Tasca d'Almerita</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Perricone, Palermo</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Passo di Luna" Funaro</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Inzolia, Zibibbo, IGP Bio, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Passione &amp; Sentimento" Pasqua</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Merlot, Corvina e Croatina, Veneto</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"La Segreta" Planeta</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola, Syrah, Merlot e Cabernet Franc, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Finimondo" Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nero d'Avola, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Sallier de la Tour" Tasca d'Almerita</span><span class="item-price">€ 20,00</span></div>
+        <div class="item-desc">Syrah DOC, Palermo</div>
+      </div>
+    </section>
+
+    <!-- VINI ROSATI -->
+    <section id="vini-rosati" class="menu-section">
+      <div class="category-title">I Vini Rosati</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Rose di Rosa" Milazzo</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Inzolia e Chardonnay, Agrigento</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Cherme" Firriato</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Nerello Mascalese e Frappato, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Traimari Rosè" Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Frappato, Trapani</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">"Albaria" Rosato Pellegrino</span><span class="item-price">€ 25,00</span></div>
+        <div class="item-desc">Frappato, Trapani</div>
+      </div>
+    </section>
+
+  </div>
+
+<!-- TASTO FLOTTANTE TORNA SU -->
+  <a href="#top" class="back-to-top" title="Torna all'inizio">▲</a>
+
+  <div class="footer">
+    <p>© Meet Cafè • Lounge Bar &amp; Bistrot</p>
+  </div>
+
+</body>
+</html>
