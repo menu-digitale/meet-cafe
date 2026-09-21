@@ -222,6 +222,20 @@
       border-top: 1px solid #1a1a1a;
       margin-top: 40px;
     }
+
+    /* OTTIMIZZAZIONE STAMPA */
+    @media print {
+      .quick-nav-wrap,
+      .back-to-top {
+        display: none !important;
+      }
+      .header {
+        padding-top: 20px !important;
+      }
+      .dish-item {
+        break-inside: avoid;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -233,6 +247,7 @@
       <a href="#insalate">Insalate</a>
       <a href="#primi">Primi</a>
       <a href="#secondi">Secondi</a>
+      <a href="#sushi">Sushi</a>
       <a href="#burger">Bun</a>
       <a href="#pinse">Pinse</a>
       <a href="#dessert">Dessert</a>
@@ -331,7 +346,9 @@
 
     <!-- INSALATE -->
     <section id="insalate" class="menu-section">
+      <img src="insalate.jpg" class="category-banner" alt="Insalate Meet">
       <div class="category-title">Insalate Meet</div>
+
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Insalata Classica</span><span class="item-price">8</span></div>
         <div class="item-desc">lattuga, pomodoro, mais, tonno e mozzarella fiordilatte</div>
@@ -381,7 +398,7 @@
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Tagliolino al Nero di Seppia</span><span class="item-price">16</span></div>
-        <div class="item-desc">con aglio, basilico e panure croccante</div>
+        <div class="item-desc">con ragù di seppia fresca, pomodorino e basilico</div>
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Busiate Pesce Spada, Datterino e Melanzane</span><span class="item-price">16</span></div>
@@ -460,6 +477,17 @@
       </div>
     </section>
 
+    <!-- SUSHI -->
+    <section id="sushi" class="menu-section">
+      <img src="sushi.jpg" class="category-banner" alt="Sushi">
+      <div class="category-title">Sushi</div>
+
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Sushi Experience</span><span class="item-price">Su richiesta</span></div>
+        <div class="item-desc">Disponibile esclusivamente su ordinazione e prenotazione anticipata</div>
+      </div>
+    </section>
+
     <!-- BURGER -->
     <section id="burger" class="menu-section">
       <img src="burger.jpg" class="category-banner" alt="Burger Gourmet">
@@ -497,11 +525,16 @@
 
     <!-- PINSE -->
     <section id="pinse" class="menu-section">
+      <img src="pinse.jpg" class="category-banner" alt="Pinse &amp; Crunch">
       <div class="category-title">Pinse &amp; Crunch</div>
 
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Pinsa Margherita</span><span class="item-price">6</span></div>
         <div class="item-desc">salsa di pomodoro, mozzarella fiordilatte</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa Tedesca</span><span class="item-price">7</span></div>
+        <div class="item-desc">salsa di pomodoro, fiordilatte, patatine fritte, würstel</div>
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Pinsa di Semola Rimacinata Siciliana</span><span class="item-price">8</span></div>
@@ -520,12 +553,12 @@
         <div class="item-desc">mozzarella, cipolla rossa, patate con buccia, maionese allo zafferano</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Pinsa ai 5 Cereali</span><span class="item-price">13</span></div>
-        <div class="item-desc">margherita con crudo di Parma, fiordilatte, pomodorini confit e scaglie di Parmigiano</div>
-      </div>
-      <div class="dish-item">
         <div class="dish-header"><span class="item-name">Pinsa Mortadella e Pistacchio</span><span class="item-price">12</span></div>
         <div class="item-desc">mortadella, burrata, granella e pesto di pistacchio</div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Pinsa ai 5 Cereali</span><span class="item-price">13</span></div>
+        <div class="item-desc">margherita con crudo di Parma, fiordilatte, pomodorini confit e scaglie di Parmigiano</div>
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Crunch Crudo di Parma</span><span class="item-price">14</span></div>
@@ -574,6 +607,7 @@
 
     <!-- BEVANDE -->
     <section id="bevande" class="menu-section">
+      <img src="bevande.jpg" class="category-banner" alt="Bevande &amp; Soft Drink">
       <div class="category-title">Bevande &amp; Soft Drink</div>
 
       <div class="dish-item">
@@ -622,6 +656,7 @@
 
     <!-- BIRRE -->
     <section id="birre" class="menu-section">
+      <img src="birre.jpg" class="category-banner" alt="Birre">
       <div class="category-title">Birre</div>
 
       <div class="dish-item">
@@ -766,10 +801,6 @@
         <div class="item-desc">Tequila, Blue Curaçao, succo di limone, latte di cocco</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Frozen Blu</span><span class="item-price">8</span></div>
-        <div class="item-desc">Vodka, Blue Curaçao, succo d'ananas, latte di cocco</div>
-      </div>
-      <div class="dish-item">
         <div class="dish-header"><span class="item-name">Piña Colada</span><span class="item-price">8</span></div>
         <div class="item-desc">Rum Bianco, Crema di Cocco, Ananas Fresca</div>
       </div>
@@ -830,8 +861,8 @@
         <div class="item-desc">Midori, succo di Limone, Sciroppo di Zucchero, Albume</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Mojito Cubano</span><span class="item-price">7</span></div>
-        <div class="item-desc">Rum Bianco, Zucchero Bianco, Succo di Lime, Foglie di Menta, Soda Water</div>
+        <div class="dish-header"><span class="item-name">Mojito Tradizionale Cubano</span><span class="item-price">7</span></div>
+        <div class="item-desc">Rum Bianco, Zucchero Bianco, Succo di Lime fresco, Foglie di Menta, Soda Water</div>
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">New York Sour</span><span class="item-price">8</span></div>
@@ -844,8 +875,8 @@
       <div class="category-title">Pestati</div>
 
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Mojito</span><span class="item-price">8</span></div>
-        <div class="item-desc">Rum Bianco, Rum scuro, Fette di Lime, Zucchero di Canna, Foglie di Menta, Soda Water</div>
+        <div class="dish-header"><span class="item-name">Mojito Pestato (Double Rum)</span><span class="item-price">8</span></div>
+        <div class="item-desc">Rum Bianco, Rum Scuro, Lime a fette, Zucchero di Canna grezzo, Foglie di Menta, Soda Water</div>
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Caipiroska</span><span class="item-price">8</span></div>
@@ -964,6 +995,12 @@
       <img src="vini1.jpg" class="category-banner" alt="Carta dei Vini">
       <div class="category-title">Le Bollicine</div>
 
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">Privè Lounge</span><span class="item-price">18</span></div>
+      </div>
+      <div class="dish-item">
+        <div class="dish-header"><span class="item-name">I Templari Gran Cuvée</span><span class="item-price">20</span></div>
+      </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Firriato Saint Germain</span><span class="item-price">25</span></div>
         <div class="item-desc">Trapani</div>
