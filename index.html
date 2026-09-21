@@ -2,8 +2,13 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menù Meet Cafè</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Menù Meet Cafè — Lounge Bar &amp; Bistrot, Aragona (AG)</title>
+  <meta name="description" content="Menù del Meet Cafè, lounge bar e bistrot ad Aragona (AG): antipasti, primi di mare, bun gourmet, pinse, cocktail e carta dei vini siciliani.">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Menù Meet Cafè">
+  <meta property="og:description" content="Lounge Bar &amp; Bistrot — Aragona (AG). Cucina, cocktail e carta dei vini.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,12 +21,22 @@
     html {
       scroll-behavior: smooth;
       background-color: #0b0b0b;
+      -webkit-text-size-adjust: 100%;
     }
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
       background-color: #0b0b0b;
       color: #e0e0e0;
-      padding-bottom: 80px;
+      padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid #d4af37;
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
     }
 
     /* BARRA CATEGORIE PERMANENTE IN SOVRAIMPRESSIONE */
@@ -36,6 +51,7 @@
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid #242424;
       padding: 10px 0;
+      padding-top: calc(10px + env(safe-area-inset-top, 0px));
     }
     .quick-nav {
       display: flex;
@@ -57,21 +73,29 @@
       color: #d4af37;
       text-decoration: none;
       border: 1px solid #332a10;
-      padding: 6px 12px;
+      padding: 7px 13px;
       border-radius: 20px;
       background: rgba(212, 175, 55, 0.08);
       white-space: nowrap;
+      transition: background-color 0.18s ease, color 0.18s ease;
     }
     .quick-nav a:active,
     .quick-nav a:hover {
       background: #d4af37;
       color: #0b0b0b;
     }
+    /* sezione attualmente visibile */
+    .quick-nav a.is-active {
+      background: #d4af37;
+      color: #0b0b0b;
+      border-color: #d4af37;
+    }
 
     /* HEADER CON SPAZIO PER NON FINIRE SOTTO LA BARRA FISSA */
     .header {
       text-align: center;
-      padding: 70px 20px 25px;
+      padding: 80px 20px 25px;
+      padding-top: calc(80px + env(safe-area-inset-top, 0px));
       border-bottom: 1px solid #1a1a1a;
       background: radial-gradient(circle at top, #161616 0%, #0b0b0b 70%);
     }
@@ -91,19 +115,25 @@
       margin-bottom: 10px;
     }
     .header p {
-      font-size: 11px;
-      color: #777;
+      font-size: 11.5px;
+      color: #8a8a8a;
       line-height: 1.6;
     }
-    .header a.phone-btn {
+    .header .header-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .header a.pill-btn {
       display: inline-block;
-      margin-top: 10px;
       color: #d4af37;
       text-decoration: none;
       font-size: 12px;
       font-weight: 600;
       border: 1px solid #332a10;
-      padding: 5px 14px;
+      padding: 7px 14px;
       border-radius: 20px;
       background: rgba(212, 175, 55, 0.05);
     }
@@ -117,7 +147,7 @@
 
     /* COMPENSAZIONE SCROLL SOTTO LA BARRA */
     .menu-section {
-      scroll-margin-top: 60px;
+      scroll-margin-top: calc(78px + env(safe-area-inset-top, 0px));
     }
 
     /* FOTO BANNER */
@@ -130,6 +160,7 @@
       margin-bottom: 16px;
       display: block;
       border: 1px solid #222;
+      background: #141414;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
@@ -148,7 +179,7 @@
 
     /* SINGOLO PIATTO */
     .dish-item {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .dish-header {
       display: flex;
@@ -158,48 +189,77 @@
       margin-bottom: 4px;
     }
     .item-name {
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 600;
       color: #ffffff;
-      line-height: 1.3;
+      line-height: 1.35;
     }
     .item-price {
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 600;
       color: #d4af37;
       white-space: nowrap;
     }
     .item-desc {
-      font-size: 11px;
-      color: #8c8c8c;
+      font-size: 12px;
+      color: #9a9a9a;
       font-style: italic;
-      line-height: 1.45;
+      line-height: 1.5;
+      max-width: 44ch;
+    }
+    /* marcatore prodotto surgelato / congelato all'origine */
+    .ast {
+      color: #d4af37;
+      font-weight: 700;
+      font-style: normal;
+      margin-left: 2px;
     }
 
-    /* BOX ALLERGENI */
-    .allergeni-box {
+    /* BOX INFORMATIVO */
+    .info-box {
       margin-top: 45px;
       background: #111111;
       border: 1px solid #262626;
       border-radius: 12px;
       padding: 20px 18px;
     }
+    .info-box p {
+      font-size: 11.5px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-top: 8px;
+    }
     .allergeni-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px 14px;
       margin-top: 14px;
-      font-size: 11px;
+      font-size: 11.5px;
       color: #a0a0a0;
+    }
+    .nota-surgelati {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #242424;
+      font-size: 11.5px;
+      color: #b0b0b0;
+      line-height: 1.65;
+    }
+    .nota-finale {
+      font-size: 10.5px;
+      color: #666;
+      font-style: italic;
+      margin-top: 14px;
+      line-height: 1.55;
     }
 
     /* TASTO FLOTTANTE TORNA SU */
     .back-to-top {
       position: fixed;
-      bottom: 22px;
+      bottom: calc(22px + env(safe-area-inset-bottom, 0px));
       right: 22px;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: #141414;
       border: 1px solid #d4af37;
@@ -211,6 +271,13 @@
       font-size: 18px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
       z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
     }
 
     /* FOOTER */
@@ -226,15 +293,33 @@
     /* OTTIMIZZAZIONE STAMPA */
     @media print {
       .quick-nav-wrap,
-      .back-to-top {
+      .back-to-top,
+      .header-actions {
         display: none !important;
+      }
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
       }
       .header {
         padding-top: 20px !important;
+        background: none !important;
       }
-      .dish-item {
-        break-inside: avoid;
+      .header h1,
+      .category-title,
+      .item-price,
+      .ast {
+        color: #000000 !important;
       }
+      .item-name { color: #000000 !important; }
+      .item-desc { color: #444444 !important; }
+      .category-banner { display: none !important; }
+      .info-box { border-color: #999 !important; background: none !important; }
+      .info-box p,
+      .allergeni-grid,
+      .nota-surgelati { color: #222 !important; }
+      .dish-item { break-inside: avoid; }
+      .menu-section { break-inside: auto; }
     }
   </style>
 </head>
@@ -242,7 +327,7 @@
 
   <!-- BARRA NAVIGAZIONE FISSA -->
   <div class="quick-nav-wrap">
-    <nav class="quick-nav">
+    <nav class="quick-nav" id="quickNav" aria-label="Categorie del menù">
       <a href="#antipasti">Antipasti</a>
       <a href="#insalate">Insalate</a>
       <a href="#primi">Primi</a>
@@ -276,14 +361,17 @@
     <div class="subtitle">Lounge Bar &amp; Bistrot</div>
     <p>Via Salvatore La Rosa 438, 92021 Aragona (AG)</p>
     <p>Orari Cucina: Tutti i giorni 06:30 – 23:30</p>
-    <a href="tel:+390922082959" class="phone-btn">📞 Chiama: +39 0922 082959</a>
+    <div class="header-actions">
+      <a href="tel:+390922082959" class="pill-btn">📞 Chiama</a>
+      <a href="https://maps.google.com/?q=Via+Salvatore+La+Rosa+438,+92021+Aragona+AG" class="pill-btn" target="_blank" rel="noopener">📍 Indicazioni</a>
+    </div>
   </div>
 
   <div class="menu-container">
 
     <!-- ANTIPASTI -->
     <section id="antipasti" class="menu-section">
-      <img src="antipasti.jpg" class="category-banner" alt="Antipasti &amp; Fritti">
+      <img src="antipasti.jpg" class="category-banner" alt="Antipasti e fritti del Meet Cafè" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Antipasti &amp; Fritti</div>
 
       <div class="dish-item">
@@ -293,29 +381,29 @@
         <div class="dish-header"><span class="item-name">Arancina Ragù / Prosciutto e Mozzarella</span><span class="item-price">2</span></div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Patatine Fritte Medie</span><span class="item-price">4</span></div>
+        <div class="dish-header"><span class="item-name">Patatine Fritte Medie<span class="ast">*</span></span><span class="item-price">4</span></div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Patatine con Buccia</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Patatine con Buccia<span class="ast">*</span></span><span class="item-price">7</span></div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">10 Nuggets di Pollo</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">10 Nuggets di Pollo<span class="ast">*</span></span><span class="item-price">7</span></div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Patatine Fritte Grandi</span><span class="item-price">8</span></div>
+        <div class="dish-header"><span class="item-name">Patatine Fritte Grandi<span class="ast">*</span></span><span class="item-price">8</span></div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Arancinette Mignon (10 pz)</span><span class="item-price">8</span></div>
+        <div class="dish-header"><span class="item-name">Arancinette Mignon (10 pz)<span class="ast">*</span></span><span class="item-price">8</span></div>
       </div>
       <div class="dish-item">
         <div class="dish-header"><span class="item-name">Focaccina Granmix ai 7 Cereali</span><span class="item-price">10</span></div>
         <div class="item-desc">con rucola, bresaola, ciliegino e scaglie di Grana Padano</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Arancinette Mignon Special (10 pz)</span><span class="item-price">10</span></div>
+        <div class="dish-header"><span class="item-name">Arancinette Mignon Special (10 pz)<span class="ast">*</span></span><span class="item-price">10</span></div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">L'Aperitutto</span><span class="item-price">11</span></div>
+        <div class="dish-header"><span class="item-name">L'Aperitutto<span class="ast">*</span></span><span class="item-price">11</span></div>
         <div class="item-desc">salumi, fritture, bruschette, formaggi misti</div>
       </div>
       <div class="dish-item">
@@ -323,7 +411,7 @@
         <div class="item-desc">con bruschette e specialità della casa</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Arancina al Nero di Seppia</span><span class="item-price">13</span></div>
+        <div class="dish-header"><span class="item-name">Arancina al Nero di Seppia<span class="ast">*</span></span><span class="item-price">13</span></div>
         <div class="item-desc">su vellutata di pomodorini confit e burrata</div>
       </div>
       <div class="dish-item">
@@ -331,22 +419,22 @@
         <div class="item-desc">fiordilatte, pomodoro e crudo San Daniele</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Il Fritto Special</span><span class="item-price">14</span></div>
+        <div class="dish-header"><span class="item-name">Il Fritto Special<span class="ast">*</span></span><span class="item-price">14</span></div>
         <div class="item-desc">patatine con buccia, panelle, crocchette, nuggets, bastoncini di pollo</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Cestino Brisè</span><span class="item-price">18</span></div>
+        <div class="dish-header"><span class="item-name">Cestino Brisè<span class="ast">*</span></span><span class="item-price">18</span></div>
         <div class="item-desc">tonno scottato con cipolla rossa, maionese all'arancia e croccante all'olio evo</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Frittura di Pesce</span><span class="item-price">19</span></div>
+        <div class="dish-header"><span class="item-name">Frittura di Pesce<span class="ast">*</span></span><span class="item-price">19</span></div>
         <div class="item-desc">calamari e gambero rosso con maionese alla cipolla rossa di Tropea e chips di zucchine</div>
       </div>
     </section>
 
     <!-- INSALATE -->
     <section id="insalate" class="menu-section">
-      <img src="insalate.jpg" class="category-banner" alt="Insalate Meet">
+      <img src="insalate.jpg" class="category-banner" alt="Insalate Meet" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Insalate Meet</div>
 
       <div class="dish-item">
@@ -366,14 +454,14 @@
         <div class="item-desc">valeriana, fesa di tacchino, noci, carote e provola siciliana</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Insalata Salmone</span><span class="item-price">11</span></div>
+        <div class="dish-header"><span class="item-name">Insalata Salmone<span class="ast">*</span></span><span class="item-price">11</span></div>
         <div class="item-desc">salmone, valeriana, ciliegino dry, carota e pistacchi</div>
       </div>
     </section>
 
     <!-- PRIMI -->
     <section id="primi" class="menu-section">
-      <img src="primi.jpg" class="category-banner" alt="Primi Piatti">
+      <img src="primi.jpg" class="category-banner" alt="Primi piatti" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Primi Piatti</div>
 
       <div class="dish-item">
@@ -385,11 +473,11 @@
         <div class="item-desc">melanzane, pesto di basilico, salsa di pomodoro</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Al Tonno</span><span class="item-price">13</span></div>
+        <div class="dish-header"><span class="item-name">Al Tonno<span class="ast">*</span></span><span class="item-price">13</span></div>
         <div class="item-desc">tonno fresco, ciliegino, prezzemolo</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Alici, Datterino e Mollica all'Olio EVO</span><span class="item-price">13</span></div>
+        <div class="dish-header"><span class="item-name">Alici, Datterino e Mollica all'Olio EVO<span class="ast">*</span></span><span class="item-price">13</span></div>
         <div class="item-desc">con aglio, basilico e panure croccante</div>
       </div>
       <div class="dish-item">
@@ -397,34 +485,34 @@
         <div class="item-desc">guanciale, tuorlo d'uovo, pecorino romano</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Tagliolino al Nero di Seppia</span><span class="item-price">16</span></div>
+        <div class="dish-header"><span class="item-name">Tagliolino al Nero di Seppia<span class="ast">*</span></span><span class="item-price">16</span></div>
         <div class="item-desc">con ragù di seppia fresca, pomodorino e basilico</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Busiate Pesce Spada, Datterino e Melanzane</span><span class="item-price">16</span></div>
+        <div class="dish-header"><span class="item-name">Busiate Pesce Spada, Datterino e Melanzane<span class="ast">*</span></span><span class="item-price">16</span></div>
         <div class="item-desc">con aglio e basilico</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Linguine con Vongole Veraci</span><span class="item-price">18</span></div>
+        <div class="dish-header"><span class="item-name">Linguine con Vongole Veraci<span class="ast">*</span></span><span class="item-price">18</span></div>
         <div class="item-desc">con uova/bottarga, prezzemolo, datterino</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Gambero Rosso di Mazara e Pistacchi Locali</span><span class="item-price">20</span></div>
+        <div class="dish-header"><span class="item-name">Gambero Rosso di Mazara e Pistacchi Locali<span class="ast">*</span></span><span class="item-price">20</span></div>
         <div class="item-desc">ciliegino, pesto di basilico, aglio, peperoncino</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Spaghettoni Ricci di Mare e Tartare di Gambero</span><span class="item-price">25</span></div>
+        <div class="dish-header"><span class="item-name">Spaghettoni Ricci di Mare e Tartare di Gambero<span class="ast">*</span></span><span class="item-price">25</span></div>
         <div class="item-desc">con aglio</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">All'Aragosta (min. 2 pax)</span><span class="item-price">28 / cad.</span></div>
+        <div class="dish-header"><span class="item-name">All'Aragosta (min. 2 pax)<span class="ast">*</span></span><span class="item-price">28 / cad.</span></div>
         <div class="item-desc">con aglio, ciliegino, pesto di basilico, salsa di pomodoro</div>
       </div>
     </section>
 
     <!-- SECONDI -->
     <section id="secondi" class="menu-section">
-      <img src="secondi.jpg" class="category-banner" alt="Secondi Piatti &amp; Carni">
+      <img src="secondi.jpg" class="category-banner" alt="Secondi piatti e carni" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Secondi &amp; Carni (Selezioni Bistrot)</div>
 
       <div class="dish-item">
@@ -432,7 +520,7 @@
         <div class="item-desc">con salsa alle olive siciliane e pomodorino confit</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Pesce Spada Grigliato</span><span class="item-price">16</span></div>
+        <div class="dish-header"><span class="item-name">Pesce Spada Grigliato<span class="ast">*</span></span><span class="item-price">16</span></div>
         <div class="item-desc">con contorno di verdure grigliate</div>
       </div>
       <div class="dish-item">
@@ -448,7 +536,7 @@
         <div class="item-desc">con formaggio di capra girgentana e marmellata di arance bio di Ribera</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Triglie con Contorno</span><span class="item-price">18</span></div>
+        <div class="dish-header"><span class="item-name">Triglie con Contorno<span class="ast">*</span></span><span class="item-price">18</span></div>
         <div class="item-desc">con contorno di verdure grigliate</div>
       </div>
       <div class="dish-item">
@@ -464,11 +552,11 @@
         <div class="item-desc">con patate al forno</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Calamaro Grigliato</span><span class="item-price">20</span></div>
+        <div class="dish-header"><span class="item-name">Calamaro Grigliato<span class="ast">*</span></span><span class="item-price">20</span></div>
         <div class="item-desc">con contorno di verdure grigliate</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">La Nostra Frittura di Pesce</span><span class="item-price">20</span></div>
+        <div class="dish-header"><span class="item-name">La Nostra Frittura di Pesce<span class="ast">*</span></span><span class="item-price">20</span></div>
         <div class="item-desc">calamari, gamberi, gambero rosso di Mazara, filetti di pesce locale</div>
       </div>
       <div class="dish-item">
@@ -479,53 +567,53 @@
 
     <!-- SUSHI -->
     <section id="sushi" class="menu-section">
-      <img src="sushi.jpg" class="category-banner" alt="Sushi">
+      <img src="sushi.jpg" class="category-banner" alt="Sushi" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Sushi</div>
 
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Sushi Experience</span><span class="item-price">Su richiesta</span></div>
+        <div class="dish-header"><span class="item-name">Sushi Experience<span class="ast">*</span></span><span class="item-price">Su richiesta</span></div>
         <div class="item-desc">Disponibile esclusivamente su ordinazione e prenotazione anticipata</div>
       </div>
     </section>
 
     <!-- BURGER -->
     <section id="burger" class="menu-section">
-      <img src="burger.jpg" class="category-banner" alt="Burger Gourmet">
+      <img src="burger.jpg" class="category-banner" alt="Burger gourmet" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Bistrot Bun (Burger Gourmet)</div>
 
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Cotoletta di Pollo Burger</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Cotoletta di Pollo Burger<span class="ast">*</span></span><span class="item-price">7</span></div>
         <div class="item-desc">lattuga, pomodoro + contorno patatine fritte</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Hamburger di Vitello Classic</span><span class="item-price">9</span></div>
+        <div class="dish-header"><span class="item-name">Hamburger di Vitello Classic<span class="ast">*</span></span><span class="item-price">9</span></div>
         <div class="item-desc">lattuga, pomodoro, formaggio svizzero + contorno patatine fritte</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Burger Vegetariano</span><span class="item-price">13</span></div>
+        <div class="dish-header"><span class="item-name">Burger Vegetariano<span class="ast">*</span></span><span class="item-price">13</span></div>
         <div class="item-desc">fiordilatte, pomodoro a fette, lattuga, zucchine e chips di patatine</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Hamburger di Scottona</span><span class="item-price">13</span></div>
+        <div class="dish-header"><span class="item-name">Hamburger di Scottona<span class="ast">*</span></span><span class="item-price">13</span></div>
         <div class="item-desc">cipolla rossa di Tropea, formaggio siciliano, pancetta coppata, salsa BBQ + contorno patatine fritte</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Hamburger Angus (230 gr)</span><span class="item-price">15</span></div>
+        <div class="dish-header"><span class="item-name">Hamburger Angus (230 gr)<span class="ast">*</span></span><span class="item-price">15</span></div>
         <div class="item-desc">cheddar fuso, lattuga, pomodoro, bacon, cipolla croccante + contorno patatine fritte</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Bun al Basilico con Salmone</span><span class="item-price">15</span></div>
+        <div class="dish-header"><span class="item-name">Bun al Basilico con Salmone<span class="ast">*</span></span><span class="item-price">15</span></div>
         <div class="item-desc">chips di limone candito, burrata, valeriana con maionese al lime</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Bun al Nero di Seppia</span><span class="item-price">16</span></div>
+        <div class="dish-header"><span class="item-name">Bun al Nero di Seppia<span class="ast">*</span></span><span class="item-price">16</span></div>
         <div class="item-desc">stracciatella, tartare di tonno, dadolata di pomodorino, pesto fresco + contorno patatine fritte</div>
       </div>
     </section>
 
     <!-- PINSE -->
     <section id="pinse" class="menu-section">
-      <img src="pinse.jpg" class="category-banner" alt="Pinse &amp; Crunch">
+      <img src="pinse.jpg" class="category-banner" alt="Pinse e crunch" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Pinse &amp; Crunch</div>
 
       <div class="dish-item">
@@ -533,7 +621,7 @@
         <div class="item-desc">salsa di pomodoro, mozzarella fiordilatte</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Pinsa Tedesca</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Pinsa Tedesca<span class="ast">*</span></span><span class="item-price">7</span></div>
         <div class="item-desc">salsa di pomodoro, fiordilatte, patatine fritte, würstel</div>
       </div>
       <div class="dish-item">
@@ -545,11 +633,11 @@
         <div class="item-desc">salsa pomodoro, fiordilatte, chips di melanzane croccanti al formaggio, basilico, pesto</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Crunch Kebab</span><span class="item-price">10</span></div>
+        <div class="dish-header"><span class="item-name">Crunch Kebab<span class="ast">*</span></span><span class="item-price">10</span></div>
         <div class="item-desc">con patatine fritte</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Crunch Porchetta</span><span class="item-price">12</span></div>
+        <div class="dish-header"><span class="item-name">Crunch Porchetta<span class="ast">*</span></span><span class="item-price">12</span></div>
         <div class="item-desc">mozzarella, cipolla rossa, patate con buccia, maionese allo zafferano</div>
       </div>
       <div class="dish-item">
@@ -565,14 +653,14 @@
         <div class="item-desc">burrata, ciliegino e rucola</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Pinsa Stracciatella e Gambero Rosso</span><span class="item-price">16</span></div>
+        <div class="dish-header"><span class="item-name">Pinsa Stracciatella e Gambero Rosso<span class="ast">*</span></span><span class="item-price">16</span></div>
         <div class="item-desc">gambero rosso di Mazara, capuliato di pomodorini secchi, microfoglie di basilico</div>
       </div>
     </section>
 
     <!-- DESSERT -->
     <section id="dessert" class="menu-section">
-      <img src="dessert.jpg" class="category-banner" alt="Dessert">
+      <img src="dessert.jpg" class="category-banner" alt="Dessert" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Dessert</div>
 
       <div class="dish-item">
@@ -607,7 +695,7 @@
 
     <!-- BEVANDE -->
     <section id="bevande" class="menu-section">
-      <img src="bevande.jpg" class="category-banner" alt="Bevande &amp; Soft Drink">
+      <img src="bevande.jpg" class="category-banner" alt="Bevande e soft drink" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Bevande &amp; Soft Drink</div>
 
       <div class="dish-item">
@@ -656,7 +744,7 @@
 
     <!-- BIRRE -->
     <section id="birre" class="menu-section">
-      <img src="birre.jpg" class="category-banner" alt="Birre">
+      <img src="birre.jpg" class="category-banner" alt="Birre" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Birre</div>
 
       <div class="dish-item">
@@ -679,9 +767,9 @@
       </div>
     </section>
 
-    <!-- COCKTAILS IBA -->
+    <!-- COCKTAILS -->
     <section id="cocktails" class="menu-section">
-      <img src="drink.jpg" class="category-banner" alt="Cocktails IBA">
+      <img src="drink.jpg" class="category-banner" alt="Cocktail" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Cocktail's IBA</div>
 
       <div class="dish-item">
@@ -741,7 +829,7 @@
         <div class="item-desc">Gin, Triple sec, Succo di Limone</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Pink Lady</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Pink Lady<span class="ast">**</span></span><span class="item-price">7</span></div>
         <div class="item-desc">Gin, Succo di Limone, Granatina, Albume</div>
       </div>
       <div class="dish-item">
@@ -841,23 +929,23 @@
       <div class="category-title">Sour</div>
 
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Vodka Sour</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Vodka Sour<span class="ast">**</span></span><span class="item-price">7</span></div>
         <div class="item-desc">Vodka, Succo di Limone, Sciroppo di Zucchero, Albume</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Disaronno Sour</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Disaronno Sour<span class="ast">**</span></span><span class="item-price">7</span></div>
         <div class="item-desc">Amaretto Disaronno, Succo di Limone, Sciroppo di Zucchero, Albume</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Whiskey Sour</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Whiskey Sour<span class="ast">**</span></span><span class="item-price">7</span></div>
         <div class="item-desc">Bourbon Whiskey, Succo di Limone, Sciroppo di Zucchero, Albume</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Rum Sour</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Rum Sour<span class="ast">**</span></span><span class="item-price">7</span></div>
         <div class="item-desc">Rum Invecchiato, Succo di Limone, Sciroppo di Zucchero, Albume</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Midori Sour</span><span class="item-price">7</span></div>
+        <div class="dish-header"><span class="item-name">Midori Sour<span class="ast">**</span></span><span class="item-price">7</span></div>
         <div class="item-desc">Midori, succo di Limone, Sciroppo di Zucchero, Albume</div>
       </div>
       <div class="dish-item">
@@ -865,7 +953,7 @@
         <div class="item-desc">Rum Bianco, Zucchero Bianco, Succo di Lime fresco, Foglie di Menta, Soda Water</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">New York Sour</span><span class="item-price">8</span></div>
+        <div class="dish-header"><span class="item-name">New York Sour<span class="ast">**</span></span><span class="item-price">8</span></div>
         <div class="item-desc">Rye Whiskey, Sciroppo di Zucchero, Succo di Limone, Albume, Top Vino Rosso</div>
       </div>
     </section>
@@ -992,7 +1080,7 @@
 
     <!-- BOLLICINE -->
     <section id="bollicine" class="menu-section">
-      <img src="vini1.jpg" class="category-banner" alt="Carta dei Vini">
+      <img src="vini1.jpg" class="category-banner" alt="Carta dei vini" loading="lazy" decoding="async" width="550" height="180">
       <div class="category-title">Le Bollicine</div>
 
       <div class="dish-item">
@@ -1038,15 +1126,15 @@
         <div class="item-desc">Spumante Metodo Classico, 50 mesi Grillo DOC, Agrigento</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Bellavista Alma Curvée</span><span class="item-price">60</span></div>
+        <div class="dish-header"><span class="item-name">Bellavista Alma Cuvée</span><span class="item-price">60</span></div>
         <div class="item-desc">Franciacorta</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Ca del Bosco Curvée</span><span class="item-price">70</span></div>
+        <div class="dish-header"><span class="item-name">Ca' del Bosco Cuvée</span><span class="item-price">70</span></div>
         <div class="item-desc">Franciacorta</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Moët et Chandon Extra Brut</span><span class="item-price">90</span></div>
+        <div class="dish-header"><span class="item-name">Moët &amp; Chandon Extra Brut</span><span class="item-price">90</span></div>
         <div class="item-desc">Champagne</div>
       </div>
       <div class="dish-item">
@@ -1054,7 +1142,7 @@
         <div class="item-desc">Metodo Classico Brut, Agrigento</div>
       </div>
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">Don Pèrignon</span><span class="item-price">390</span></div>
+        <div class="dish-header"><span class="item-name">Dom Pérignon</span><span class="item-price">390</span></div>
         <div class="item-desc">Champagne</div>
       </div>
     </section>
@@ -1288,7 +1376,7 @@
       <div class="category-title">I Vini Rosati</div>
 
       <div class="dish-item">
-        <div class="dish-header"><span class="item-name">"Rose di Rosa" Milazzo</span><span class="item-price">25</span></div>
+        <div class="dish-header"><span class="item-name">"Rosé di Rosa" Milazzo</span><span class="item-price">25</span></div>
         <div class="item-desc">Inzolia e Chardonnay, Agrigento</div>
       </div>
       <div class="dish-item">
@@ -1307,10 +1395,10 @@
 
     <!-- ALLERGENI -->
     <section id="allergeni" class="menu-section">
-      <div class="allergeni-box">
+      <div class="info-box">
         <div class="category-title" style="margin-top: 0; padding-bottom: 6px; font-size: 14px;">Informativa Allergeni</div>
-        <p style="font-size: 11px; color: #b0b0b0; line-height: 1.6; margin-top: 8px;">
-          Gentile cliente, le informazioni circa la presenza di sostanze o prodotti che provocano allergie o intolleranze sono disponibili rivolgendosi al personale di servizio. Se soffri di allergie o intolleranze alimentari, ti invitiamo a comunicarlo prima dell'ordinazione (Reg. UE n. 1169/2011).
+        <p>
+          Gentile cliente, le informazioni circa la presenza di sostanze o prodotti che provocano allergie o intolleranze sono disponibili rivolgendosi al personale di servizio, che può consultare l'apposito registro degli ingredienti. Se soffri di allergie o intolleranze alimentari, ti invitiamo a comunicarlo prima dell'ordinazione (Reg. UE n. 1169/2011).
         </p>
 
         <div class="allergeni-grid">
@@ -1330,8 +1418,17 @@
           <div><strong>14.</strong> Molluschi</div>
         </div>
 
-        <p style="font-size: 10px; color: #666; font-style: italic; margin-top: 14px; line-height: 1.5;">
-          *I piatti somministrati possono contenere tracce di allergeni per contaminazione crociata durante le preparazioni. Il prodotto ittico destinato al consumo crudo è sottoposto a trattamento di bonifica preventiva mediante abbattimento termico (Reg. CE 853/2004).
+        <div class="nota-surgelati">
+          <p style="margin-top: 0;">
+            <span class="ast">*</span> Prodotto surgelato all'origine o congelato in loco secondo le procedure del piano HACCP aziendale, in assenza di prodotto fresco.
+          </p>
+          <p>
+            <span class="ast">**</span> Preparazione contenente albume d'uovo crudo o pastorizzato.
+          </p>
+        </div>
+
+        <p class="nota-finale">
+          I piatti somministrati possono contenere tracce di allergeni per contaminazione crociata durante le preparazioni. Il prodotto ittico destinato al consumo crudo è sottoposto a trattamento di bonifica preventiva mediante abbattimento termico (Reg. CE 853/2004). I prezzi sono espressi in euro. Servizio e coperto secondo quanto esposto in sala.
         </p>
       </div>
     </section>
@@ -1339,11 +1436,70 @@
   </div>
 
   <!-- TASTO FLOTTANTE TORNA SU -->
-  <a href="#top" class="back-to-top" title="Torna all'inizio">▲</a>
+  <a href="#top" class="back-to-top" id="backToTop" title="Torna all'inizio" aria-label="Torna all'inizio">▲</a>
 
   <div class="footer">
     <p>© Meet Cafè • Lounge Bar &amp; Bistrot</p>
   </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Nasconde i banner le cui immagini non sono presenti nella cartella
+      document.querySelectorAll('.category-banner').forEach(function (img) {
+        img.addEventListener('error', function () {
+          img.style.display = 'none';
+        });
+      });
+
+      var nav = document.getElementById('quickNav');
+      var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+      var sections = links
+        .map(function (link) { return document.querySelector(link.getAttribute('href')); })
+        .filter(Boolean);
+
+      var current = null;
+
+      function setActive(id) {
+        if (id === current) return;
+        current = id;
+        links.forEach(function (link) {
+          var active = link.getAttribute('href') === '#' + id;
+          link.classList.toggle('is-active', active);
+          if (active) {
+            // porta la pillola attiva dentro la barra visibile
+            var left = link.offsetLeft - (nav.clientWidth / 2) + (link.offsetWidth / 2);
+            nav.scrollTo({ left: left, behavior: 'smooth' });
+          }
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) setActive(entry.target.id);
+          });
+        }, {
+          rootMargin: '-80px 0px -65% 0px',
+          threshold: 0
+        });
+        sections.forEach(function (section) { observer.observe(section); });
+      }
+
+      // Il tasto "torna su" compare solo dopo lo scroll
+      var backToTop = document.getElementById('backToTop');
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          backToTop.classList.toggle('is-visible', window.scrollY > 400);
+          ticking = false;
+        });
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
 </html>
