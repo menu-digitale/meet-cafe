@@ -84,7 +84,6 @@
       background: #d4af37;
       color: #0b0b0b;
     }
-    /* sezione attualmente visibile */
     .quick-nav a.is-active {
       background: #d4af37;
       color: #0b0b0b;
@@ -94,25 +93,20 @@
     /* HEADER CON SPAZIO PER NON FINIRE SOTTO LA BARRA FISSA */
     .header {
       text-align: center;
-      padding: 80px 20px 25px;
-      padding-top: calc(80px + env(safe-area-inset-top, 0px));
+      padding: 75px 20px 25px;
+      padding-top: calc(75px + env(safe-area-inset-top, 0px));
       border-bottom: 1px solid #1a1a1a;
       background: radial-gradient(circle at top, #161616 0%, #0b0b0b 70%);
     }
-    .header h1 {
-      font-size: 26px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #d4af37;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-    .header .subtitle {
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: #b0b0b0;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+    .header-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 12px;
+      border: 1px solid #332a10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
     .header p {
       font-size: 11.5px;
@@ -207,7 +201,6 @@
       line-height: 1.5;
       max-width: 44ch;
     }
-    /* marcatore prodotto surgelato / congelato all'origine */
     .ast {
       color: #d4af37;
       font-weight: 700;
@@ -305,7 +298,10 @@
         padding-top: 20px !important;
         background: none !important;
       }
-      .header h1,
+      .header-logo {
+        box-shadow: none !important;
+        border: none !important;
+      }
       .category-title,
       .item-price,
       .ast {
@@ -357,8 +353,7 @@
 
   <!-- HEADER -->
   <div class="header">
-    <h1>Meet Cafè</h1>
-    <div class="subtitle">Lounge Bar &amp; Bistrot</div>
+    <img src="logo.jpg" alt="Meet Cafè — Lounge Bar &amp; Bistrot" class="header-logo" width="100" height="100">
     <p>Via Salvatore La Rosa 438, 92021 Aragona (AG)</p>
     <p>Orari Cucina: Tutti i giorni 06:30 – 23:30</p>
     <div class="header-actions">
@@ -1458,8 +1453,8 @@
     (function () {
       'use strict';
 
-      // Nasconde i banner le cui immagini non sono presenti nella cartella
-      document.querySelectorAll('.category-banner').forEach(function (img) {
+      // Nasconde i banner o il logo se i file non sono presenti nella cartella
+      document.querySelectorAll('.category-banner, .header-logo').forEach(function (img) {
         img.addEventListener('error', function () {
           img.style.display = 'none';
         });
@@ -1480,7 +1475,6 @@
           var active = link.getAttribute('href') === '#' + id;
           link.classList.toggle('is-active', active);
           if (active) {
-            // porta la pillola attiva dentro la barra visibile
             var left = link.offsetLeft - (nav.clientWidth / 2) + (link.offsetWidth / 2);
             nav.scrollTo({ left: left, behavior: 'smooth' });
           }
@@ -1499,7 +1493,6 @@
         sections.forEach(function (section) { observer.observe(section); });
       }
 
-      // Il tasto "torna su" compare solo dopo lo scroll
       var backToTop = document.getElementById('backToTop');
       var ticking = false;
       window.addEventListener('scroll', function () {
